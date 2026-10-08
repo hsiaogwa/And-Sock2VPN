@@ -15,22 +15,27 @@ class SshMngr(
     @Volatile private var isRunning: Boolean = false;
 
     fun start(scope: CoroutineScope) {
+        if (isRunning) return;
         this.isRunning = true;
         this.job = scope.launch(Dispatchers.IO) {
+            // TO-FIX functionalization
             while (isRunning) {
                 try {
                     this@SshMngr.ssh = SSHClient();
 
-                    // TODO host key use file just like $ ssh -i
-                    ssh.addHostKeyVerifier(PromiscuousVerifier());
-                    ssh.connect(link.host, link.port);
+                    if (ssh != null) {
 
-                    if (link.pwd != null) {
-                        ssh.authPassword(link.user, link.pwd);
+                        ssh.addHostKeyVerifier(PromiscuousVerifier());
+                        ssh.connect(link.host, link.port);
+
+                        if (link.pwd != null) {
+                            ssh.authPassword(link.user, link.pwd);
+                        }
+
+                        // TODO host key use file just like $ ssh -i
+                        // TODO port dynamic forward >> e.g. local:1080
+                        ssh.newDirectConnection("127.0.0.1", 1080);
                     }
-
-                    // TODO port dynamic forward >> e.g. local:1080
-                    ssh.newDirectConnection("127.0.0.1", 1080);
 
                 } catch (e: Exception) {
                     e.printStackTrace();
