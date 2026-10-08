@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Dimension -->
+    <attr name="bottomSafeSize" format="dimension">
+        <enum name="wrap_content" value="0"/>
+    </attr>
+
+    <!-- Color -->
+    <attr name="btn_bg_ll" format="color"/>
+    <attr name="btn_fg_ll" format="color"/>
+    <attr name="btm_bar_hl" format="color"/>
+    <attr name="ic_fg" format="color"/>
+    <attr name="ic_fg_hl" format="color"/>
+    <attr name="ic_fg_ll" format="color"/>
+    <attr name="ft_fg" format="color"/>
+    <attr name="ft_fg_hl" format="color"/>
+    <attr name="ft_fg_ll" format="color"/>
+
+</resources>

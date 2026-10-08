@@ -1,0 +1,12 @@
+<resources>
+    <dimen name="margin_th">8dp</dimen>
+    <dimen name="margin_n">14dp</dimen>
+    <dimen name="margin_bo">24dp</dimen>
+    <dimen name="fab_margin">48dp</dimen>
+    <dimen name="height_th">20dp</dimen>
+    <dimen name="height_n">28dp</dimen>
+    <dimen name="height_bo">36dp</dimen>
+    <dimen name="width_mid">72dp</dimen>
+    <dimen name="btm_height">96dp</dimen>
+    <dimen name="btm_icon">76dp</dimen>
+</resources>

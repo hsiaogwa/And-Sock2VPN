@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <corners
+                android:topLeftRadius="@dimen/height_th"
+                android:topRightRadius="@dimen/height_th" />
+            <solid android:color="?attr/btn_bg_ll" />
+        </shape>
+    </item>
+
+    <item
+        android:top="@dimen/btm_bar_hm"
+        android:bottom="@dimen/btm_bar_hm"
+        android:width="@dimen/btm_bar_w"
+        android:gravity="center">
+        <shape>
+            <solid android:color="?attr/btm_bar_hl"/>
+            <corners
+                android:topRightRadius="4dp"
+                android:topLeftRadius="4dp"
+                android:bottomLeftRadius="4dp"
+                android:bottomRightRadius="4dp"/>
+        </shape>
+    </item>
+
+</layer-list>
