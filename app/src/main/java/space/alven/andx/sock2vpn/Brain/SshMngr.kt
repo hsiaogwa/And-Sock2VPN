@@ -1,5 +1,6 @@
 package space.alven.andx.sock2vpn.Brain
 
+import android.net.VpnService
 import kotlinx.coroutines.*
 import net.schmizz.sshj.SSHClient
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier
@@ -76,13 +77,10 @@ class SshMngr(
         client.addHostKeyVerifier(PromiscuousVerifier());
         client.connect(link.host, link.port);
 
-        if (link.pwd != null && link.pwd != "") {
-            this.auth(client);
-        }
+        this.auth(client);
 
-        // TODO host key use file just like $ ssh -i
         // TODO port dynamic forward >> e.g. local:1080
-        this.redirect();
+        this.forward();
 
     }
 
@@ -116,8 +114,14 @@ class SshMngr(
             error("unknown authentication")
         }
     }
-    private fun redirect() {
-        // TODO Method Socks5
+    private fun forward(
+        vpnService: VpnService,
+        redirector: VpnForward) {
+        redirector.start(
+            vpnService = vpnService,
+            socksHost = "127.0.0.1",
+            socksPort = 1080
+        )
     }
 
 }
