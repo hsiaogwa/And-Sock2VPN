@@ -1,5 +1,7 @@
 package space.alven.andx.sock2vpn.Entity
 
+import java.io.File
+
 class SshLnkConf(
     var host: String,
     var port: Int = 22,
