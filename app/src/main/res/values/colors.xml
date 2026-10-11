@@ -9,4 +9,15 @@
     <color name="bg_gray">#808080</color>
     <color name="fg_gray_d">#555</color>
     <color name="fg_gray_l">#AAA</color>
+
+    <color name="blue">#B0D0FF</color>
+    <color name="blue_l">#BEEBFF</color>
+    <color name="blue_gray">#A6B6DB</color>
+    <color name="blue_gray_l">#C3D9F0</color>
+    <color name="blue_green_l">#CCEDF8</color>
+
+    <color name="yellow_l">#F0EFC3</color>
+    <color name="pink_l">#B6DLE8</color>
+
+    <color name="white_sand">#ECEBE0</color>
 </resources>
