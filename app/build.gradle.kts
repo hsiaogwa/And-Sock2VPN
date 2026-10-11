@@ -51,4 +51,6 @@ dependencies {
 
     implementation("com.hierynomus:sshj:0.41.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
+
+    implementation(files("libs/hev-socks5-tunnel.aar"))
 }

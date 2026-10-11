@@ -5,7 +5,7 @@ import kotlinx.coroutines.*
 import net.schmizz.sshj.SSHClient
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier
 import space.alven.andx.sock2vpn.Entity.SshLnkConf
-import java.net.ServerSocket
+import hev.htproxy.TProxyService
 
 
 class SshMngr(
@@ -114,7 +114,7 @@ class SshMngr(
             error("unknown authentication")
         }
     }
-    private fun forward(
+    private suspend fun forward(
         vpnService: VpnService,
         redirector: VpnForward) {
         redirector.start(
