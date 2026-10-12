@@ -3,11 +3,13 @@ package space.alven.andx.sock2vpn.Activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import space.alven.andx.sock2vpn.Adapter.MainAdapter
 import space.alven.andx.sock2vpn.R
+import space.alven.andx.sock2vpn.Service.MyVpnService
 import space.alven.andx.sock2vpn.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -59,4 +61,8 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }*/
+
+    private fun autolnk(v: View) {
+        var vpnService: MyVpnService; // TODO bind btn n load conf
+    }
 }
