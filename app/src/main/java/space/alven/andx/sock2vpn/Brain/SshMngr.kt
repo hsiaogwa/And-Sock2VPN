@@ -1,5 +1,6 @@
 package space.alven.andx.sock2vpn.Brain
 
+import android.R
 import android.net.VpnService
 
 import kotlinx.coroutines.Job
@@ -27,14 +28,15 @@ public class SshMngr(
     private var ssh: SSHClient? = null;
     @Volatile private var isRunning: Boolean = false;
 
-    public fun timeout(t: Int): Long {
-        val time: List<Long> = listOf(1000L, 2000L, 5000L, 10000L, 20000L, 30000L, 60000L);
+    public fun timeout(t: Int, lim: Long = 60000L): Long {
+        val time: List<Long> = listOf(1000L, 2000L, 5000L, 10000L, 20000L, 30000L, 60000L, 120000L);
         var c: Int = 0;
         var d: Int = t;
         while (d > 0 && c <= 6) {
             d /= 2;
             c++;
         }
+        if (time[c] >= lim) return lim;
         return time[c];
     }
 

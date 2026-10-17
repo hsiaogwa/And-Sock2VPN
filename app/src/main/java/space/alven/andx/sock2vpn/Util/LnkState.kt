@@ -1,6 +1,6 @@
 package space.alven.andx.sock2vpn.Util
 
-enum class SshState {
+enum class LnkState {
     STOPPED,
     CONNECTING,
     AUTHENTICATING,
