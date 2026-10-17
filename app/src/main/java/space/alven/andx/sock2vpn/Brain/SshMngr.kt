@@ -1,15 +1,27 @@
 package space.alven.andx.sock2vpn.Brain
 
 import android.net.VpnService
-import kotlinx.coroutines.*
+
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
+
 import net.schmizz.sshj.SSHClient
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier
+
 import space.alven.andx.sock2vpn.Entity.SshLnkConf
-import hev.htproxy.TProxyService
+import space.alven.andx.sock2vpn.Service.MyVpnService
 
 
-class SshMngr(
-    private val link: SshLnkConf
+public class SshMngr(
+    private val link: SshLnkConf,
+    private val vpnService: MyVpnService,
+    private val redirector: VpnForward
+): LnkMngr(
+    vpnService, redirector
 ) {
     private var job: Job? = null;
     private var ssh: SSHClient? = null;
@@ -70,7 +82,7 @@ class SshMngr(
         }
     }
 
-    private fun conn() {
+    private suspend fun conn() {
         val client: SSHClient = SSHClient();
         this.ssh = client;
 
@@ -79,7 +91,6 @@ class SshMngr(
 
         this.auth(client);
 
-        // TODO port dynamic forward >> e.g. local:1080
         this.forward();
 
     }
@@ -114,14 +125,10 @@ class SshMngr(
             error("unknown authentication")
         }
     }
-    private suspend fun forward(
-        vpnService: VpnService,
-        redirector: VpnForward) {
-        redirector.start(
-            vpnService = vpnService,
-            socksHost = "127.0.0.1",
-            socksPort = 1080
-        )
+
+    fun awaitSocksReady() {
+        TODO("Not yet implemented")
     }
+
 
 }
