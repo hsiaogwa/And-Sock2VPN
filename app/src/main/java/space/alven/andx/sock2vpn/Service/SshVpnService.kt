@@ -15,7 +15,7 @@ import space.alven.andx.sock2vpn.Brain.SshMngr
 import space.alven.andx.sock2vpn.Brain.VpnForward
 import space.alven.andx.sock2vpn.Entity.SshLnkConf
 
-class MyVpnService: VpnService() {
+class SshVpnService: VpnService() {
 
     private val serviceScope =
         CoroutineScope(SupervisorJob() + Dispatchers.IO);
@@ -29,7 +29,7 @@ class MyVpnService: VpnService() {
 
         startJob = serviceScope.launch {
             val forward = VpnForward();
-            val ssh = SshMngr(link, this@MyVpnService, forward);
+            val ssh = SshMngr(link, this@SshVpnService, forward);
 
             // 由服務建立並持有兩個物件
             sshMngr = ssh;
@@ -37,14 +37,14 @@ class MyVpnService: VpnService() {
 
             try {
                 // 1. 啟動 SSH 連線管理
-                ssh.start(this@MyVpnService.serviceScope);
+                ssh.start(this@SshVpnService.serviceScope);
 
                 // 2. 等待 SOCKS5 監聽端點確實可用
                 ssh.awaitSocksReady();
 
                 // 3. 建立 TUN，啟動 hev 引擎
                 forward.start(
-                    vpnService = this@MyVpnService,
+                    vpnService = this@SshVpnService,
                     socksHost = "127.0.0.1",
                     socksPort = 1080
                 );

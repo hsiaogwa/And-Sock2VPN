@@ -1,10 +1,9 @@
 package space.alven.andx.sock2vpn.Brain
 
-import android.net.VpnService
-import space.alven.andx.sock2vpn.Service.MyVpnService
+import space.alven.andx.sock2vpn.Service.SshVpnService
 
 public open class LnkMngr(
-    private val vpnService: MyVpnService,
+    private val vpnService: SshVpnService,
     private val redirector: VpnForward
 ) {
 

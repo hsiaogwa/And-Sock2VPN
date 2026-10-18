@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import space.alven.andx.sock2vpn.Adapter.MainAdapter
 import space.alven.andx.sock2vpn.R
-import space.alven.andx.sock2vpn.Service.MyVpnService
+import space.alven.andx.sock2vpn.Service.SshVpnService
 import space.alven.andx.sock2vpn.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -63,6 +63,6 @@ class MainActivity : AppCompatActivity() {
     }*/
 
     private fun autolnk(v: View) {
-        var vpnService: MyVpnService; // TODO bind btn n load conf
+        var vpnService: SshVpnService; // TODO bind btn n load conf
     }
 }

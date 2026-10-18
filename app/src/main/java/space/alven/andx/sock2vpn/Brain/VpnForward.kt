@@ -13,7 +13,7 @@ import java.io.IOException
 import kotlin.coroutines.cancellation.CancellationException
 
 class VpnForward(
-    private val mtu: Int = 1500 // Tun pack size def 1500byte
+    private val mtu: Int = 3000 // Tun pack size def 3000byte
 ) {
     private var tun: ParcelFileDescriptor? = null
     @Volatile private var running = false
@@ -81,6 +81,9 @@ class VpnForward(
             throw e;
         } catch (e: Exception) {
             e.printStackTrace();
+            throw e;
+        } finally {
+            this@VpnForward.stopNative();
         }
     }
 
