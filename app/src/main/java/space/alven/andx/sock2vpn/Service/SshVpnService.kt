@@ -24,6 +24,7 @@ class SshVpnService: VpnService() {
     private var vpnForward: VpnForward? = null;
     private var startJob: Job? = null;
 
+    @Synchronized
     fun startTunnel(link: SshLnkConf) {
         if (startJob?.isActive == true) return;
 
@@ -62,21 +63,53 @@ class SshVpnService: VpnService() {
     }
 
 
-
+    @Synchronized
     fun stopTunnel() {
-        startJob?.cancel()
-        startJob = null
-
+        startJob?.cancel();
+        sshMngr?.stop();
+        /*
         serviceScope.launch {
-            vpnForward?.stop()
-            sshMngr?.stop()
+            vpnForward?.stop();
+            sshMngr?.stop();
+        }
+        */
+        val forward = vpnForward;
+        if (forward != null) {
+            serviceScope.launch {
+                runCatching {
+                    forward.stop();
+                    sshMngr?.stop();
+                }
+            }
         }
     }
 
     override fun onDestroy() {
-        startJob?.cancel()
-        serviceScope.cancel()
-        super.onDestroy()
+        startJob?.cancel();
+        sshMngr?.stop();
+
+        // 先要求停止 Native 引擎，再取消服務的工作
+        val forward = vpnForward;
+        if (forward != null) {
+            kotlinx.coroutines.runBlocking {
+                withContext(NonCancellable + Dispatchers.IO) {
+                    runCatching { forward.stop() };
+                }
+            }
+        }
+
+        serviceScope.cancel();
+        super.onDestroy();
+    }
+
+    private val binder = LocalBinder();
+
+    inner class LocalBinder : android.os.Binder() {
+        fun getService(): SshVpnService = this@SshVpnService;
+    }
+
+    override fun onBind(intent: android.content.Intent): android.os.IBinder {
+        return binder;
     }
 
 }

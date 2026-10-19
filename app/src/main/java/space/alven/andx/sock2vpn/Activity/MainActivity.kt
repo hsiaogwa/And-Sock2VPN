@@ -16,15 +16,34 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding;
 
+    private var vs: SshVpnService? = null;
+    private var isBound: Boolean = false;
+
+    private val serviceConnection =
+        object : android.content.ServiceConnection {
+
+            override fun onServiceConnected(
+                name: android.content.ComponentName,
+                service: android.os.IBinder
+            ) {
+                val binder = service as SshVpnService.LocalBinder
+                vs = binder.getService()
+                isBound = true
+            }
+
+            override fun onServiceDisconnected(
+                name: android.content.ComponentName
+            ) {
+                vs = null
+                isBound = false
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(layoutInflater);
         setContentView(binding.root);
         setSupportActionBar(binding.toolbar);
-
-        /*val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)*/
 
         // bind view pager adapter
         val main_container: ViewPager2 = this.findViewById<ViewPager2>(R.id.main_container);
@@ -38,6 +57,35 @@ class MainActivity : AppCompatActivity() {
                 .setAnchorView(R.id.fab).show();
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart();
+
+        val intent = android.content.Intent(
+            this,
+            SshVpnService::class.java
+        )
+
+        bindService(
+            intent,
+            serviceConnection,
+            BIND_AUTO_CREATE
+        )
+    }
+
+    override fun onStop() {
+        if (this.isBound) {
+            unbindService(serviceConnection)
+            this.isBound = false
+        }
+
+        this.vs = null;
+        super.onStop()
+    }
+
+    private fun autolnk(v: View) {
+        var vpnService: SshVpnService; // TODO bind btn n load conf
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -54,15 +102,5 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true;
             else -> super.onOptionsItemSelected(item);
         }
-    }
-
-/*    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }*/
-
-    private fun autolnk(v: View) {
-        var vpnService: SshVpnService; // TODO bind btn n load conf
     }
 }

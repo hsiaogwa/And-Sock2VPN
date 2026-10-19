@@ -172,3 +172,28 @@ public class SshMngr(
 
 
 }
+
+// TODO fix ssh check in
+/*
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:sv+dutCj70n97uCjAwQ5GoWeNhfHABAXBTNV+KoNcxc.
+Please contact your system administrator.
+Add correct host key in /home/alven/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /home/alven/.ssh/known_hosts:3
+You can use following command to remove the offending key:
+ssh-keygen -R vm.alven.space -f /home/alven/.ssh/known_hosts
+Host key for vm.alven.space has changed and you have requested strict checking.
+Host key verification failed.
+*/ /*
+The authenticity of host 'vm.alven.space (43.212.15.189)' can't be established.
+ED25519 key fingerprint is: SHA256:sv+dutCj70n97uCjAwQ5GoWeNhfHABAXBTNV+KoNcxc
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+*/
+
