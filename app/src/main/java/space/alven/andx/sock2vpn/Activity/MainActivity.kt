@@ -1,5 +1,6 @@
 package space.alven.andx.sock2vpn.Activity
 
+import android.net.VpnService
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -7,8 +8,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
-import space.alven.andx.sock2vpn.Adapter.MainAdapter
+
 import space.alven.andx.sock2vpn.R
+import space.alven.andx.sock2vpn.Adapter.MainAdapter
+import space.alven.andx.sock2vpn.Entity.LnkConf
+import space.alven.andx.sock2vpn.Entity.SshLnkConf
 import space.alven.andx.sock2vpn.Service.SshVpnService
 import space.alven.andx.sock2vpn.databinding.ActivityMainBinding
 
@@ -19,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var vs: SshVpnService? = null;
     private var isBound: Boolean = false;
 
+    //
     private val serviceConnection =
         object : android.content.ServiceConnection {
 
@@ -84,8 +89,31 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
     }
 
+
+
+    private val vpnPermissionLauncher =
+        registerForActivityResult(
+            androidx.activity.result.contract.ActivityResultContracts
+                .StartActivityForResult()
+        ) {
+            if (it.resultCode == RESULT_OK) {
+                autolnk();
+            }
+        }
+    private var pendingLink: SshLnkConf? = null
+
     private fun autolnk(v: View) {
         var vpnService: SshVpnService; // TODO bind btn n load conf
+        val link : LnkConf = ;/* 取得你的 SshLnkConf */
+        pendingLink = link;
+
+        val permissionIntent = VpnService.prepare(this)
+        if (permissionIntent != null) {
+            vpnPermissionLauncher.launch(permissionIntent)
+        } else {
+            vpnService?.startTunnel(link);
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
