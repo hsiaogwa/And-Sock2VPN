@@ -15,8 +15,8 @@ import kotlin.coroutines.cancellation.CancellationException
 class VpnForward(
     private val mtu: Int = 3000 // Tun pack size def 3000byte
 ) {
-    private var tun: ParcelFileDescriptor? = null
-    @Volatile private var running = false
+    private var tun: ParcelFileDescriptor? = null;
+    @Volatile private var running = false;
 
     public suspend fun start(
         vpnService: VpnService,

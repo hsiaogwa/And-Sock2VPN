@@ -1,8 +1,12 @@
 package space.alven.andx.sock2vpn.Entity
 
+import androidx.room3.Entity
+import androidx.room3.PrimaryKey
 import java.io.File
 
-class SshLnkConf(
+@Entity(tableName = "SshLink")
+data class SshLnkConf(
+    @PrimaryKey(autoGenerate = true) private val id: Int = 0,
     override var name: String,
     override var host: String,
     override var port: Int = 22,

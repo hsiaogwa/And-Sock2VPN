@@ -13,15 +13,17 @@ abstract class Hooks(
 
     override fun onCreate(db: SQLiteDatabase) {
 
-        // Table link
+        /**
+         * Tables
+         */
         db.execSQL("""
             CREATE TABLE Link(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT UNIQUE,
-                type INTEGER NOT NULL
+                type INTEGER NOT NULL,
+                trust INTEGER NOT NULL DEFAULT(0)
             )
-        """.trimIndent())
-
+        """.trimIndent());
         db.execSQL("""
             CREATE TABLE SshLink(
                 id INTEGER PRIMARY KEY REFERENCES Link(id),
@@ -30,10 +32,18 @@ abstract class Hooks(
                 user TEXT NOT NULL,
                 pwd TEXT,
                 localPort INTEGER,
-                pkfuri TEXT,
+                pkfuri TEXT REFERENCES fkey(uri),
+                pkphrase TEXT
             )
-        """.trimIndent())
-        // TODO 表補全，查詢 privateKeyPassphrase 含義
+        """.trimIndent());
+        db.execSQL("""
+            CREATE TABLE fkey(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT UNIQUE,
+                uri TEXT UNIQUE
+            )
+        """.trimIndent());
+
     }
 
     override fun onConfigure(db: SQLiteDatabase) {
