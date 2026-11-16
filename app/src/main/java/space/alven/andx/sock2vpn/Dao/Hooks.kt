@@ -4,10 +4,14 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
+@Deprecated("Now use Dao.Database (using Room) to instead this class (using OpenHelper).",
+    ReplaceWith("Database", "space.alven.andx.sock2vpn.Dao.DataBase"),
+    DeprecationLevel.WARNING)
 abstract class Hooks(
+
     val CONTEXT: Context,
     val DB_NAME: String = "defalt.db",
-    val DB_VERSION: Int = 1,
+    val DB_VERSION: Int = 0x1002646e,
 
 ): SQLiteOpenHelper(CONTEXT, DB_NAME, null, DB_VERSION) {
 
@@ -16,6 +20,7 @@ abstract class Hooks(
         /**
          * Tables
          */
+
         db.execSQL("""
             CREATE TABLE Link(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -50,4 +55,5 @@ abstract class Hooks(
         super.onConfigure(db);
         db.setForeignKeyConstraintsEnabled(true);
     }
+
 }
