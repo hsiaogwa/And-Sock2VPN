@@ -11,7 +11,7 @@ abstract class Hooks(
 
     val CONTEXT: Context,
     val DB_NAME: String = "defalt.db",
-    val DB_VERSION: Int = 0x1002646e,
+    val DB_VERSION: Int = 0x100,
 
 ): SQLiteOpenHelper(CONTEXT, DB_NAME, null, DB_VERSION) {
 

@@ -1,14 +1,13 @@
 package space.alven.andx.sock2vpn.Entity
 
+import androidx.room3.ColumnInfo
+import androidx.room3.Entity
+import androidx.room3.Index
+import androidx.room3.PrimaryKey
 import java.io.File
 
-interface LnkConf{
-    var name: String;
-    var host: String;
-    var port: Int;
-    var user: String;
-    var pwd: String?;
-    var localPort: Int?;
-    val privateKey: File?;
-    val privateKeyPassphrase: String?;
-}
+
+open class LnkConf(
+
+
+)

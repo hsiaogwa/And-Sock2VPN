@@ -8,6 +8,6 @@ import android.content.Context
 class Procedures(
     val CONTEXT: Context,
     val DB_NAME: String = "defalt.db",
-    val DB_VERSION: Int = 0x1002646e,
+    val DB_VERSION: Int = 0x100,
 
 ) {}
